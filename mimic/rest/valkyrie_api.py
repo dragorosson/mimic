@@ -24,6 +24,7 @@ class ValkyrieApi(object):
     def login(self, request):
         """
         Responds with response code 200 and returns an auth token
+        See https://valkyrie.my.rackspace.com/#authentication
         """
         return self.core.valkyrie_store.create_token(request)
 
@@ -31,25 +32,32 @@ class ValkyrieApi(object):
     def login_user(self, request):
         """
         Responds with response code 200 and returns an auth token
+        See https://valkyrie.my.rackspace.com/#authentication
         """
         return self.core.valkyrie_store.create_token(request)
 
-    @app.route('/account/<int:account_number>/permissions/contacts/accounts/by_contact/<int:contact_id>/effective',
-               methods=['GET'])
+    effective_accounts_permissions_route = ('/account/<int:account_number>'
+                                            '/permissions/contacts/accounts'
+                                            '/by_contact/<int:contact_id>/effective')
+    @app.route(effective_accounts_permissions_route, methods=['GET'])
     def effective_accounts_permissions(self, request, account_number, contact_id):
         """
-        Responds with response code 200 and returns a list of permissions
+        Responds with response code 200 and returns a list of account level permissions
         for the given account and contact
+        See https://valkyrie.my.rackspace.com/#managed-accounts
         """
-        return self.core.valkyrie_store.get_accounts_permissions(request,
-                                                                 account_number, contact_id)
+        return self.core.valkyrie_store.get_permissions(request,
+                                                        account_number, contact_id, 1)
 
-    @app.route('/account/<int:account_number>/permissions/contacts/devices/by_contact/<int:contact_id>/effective',
-               methods=['GET'])
+    effective_devices_permissions_route = ('/account/<int:account_number>'
+                                           '/permissions/contacts/devices'
+                                           '/by_contact/<int:contact_id>/effective')
+    @app.route(effective_devices_permissions_route, methods=['GET'])
     def effective_devices_permissions(self, request, account_number, contact_id):
         """
-        Responds with response code 200 and returns a list of permissions
+        Responds with response code 200 and returns a list of device level permissions
         for the given account and contact
+        See https://valkyrie.my.rackspace.com/#managed-accounts
         """
-        return self.core.valkyrie_store.get_devices_permissions(request,
-                                                                account_number, contact_id)
+        return self.core.valkyrie_store.get_permissions(request,
+                                                        account_number, contact_id, 2)

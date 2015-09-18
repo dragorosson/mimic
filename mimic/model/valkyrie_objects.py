@@ -97,35 +97,11 @@ class ValkyrieStore(object):
         token = {"X-Auth-Token": str(random_hex_generator(16))}
         return dumps(token)
 
-    def get_accounts_permissions(self, request, account_number, contact_id):
+    def get_permissions(self, request, account_number, contact_id, item_type):
         """
-        Find and format the set of permissions held on account items by
-        the given contact for the given account.
         """
-        pm = []
-        for p in self.permissions:
-            if p.account_number == account_number and p.contact_id == contact_id and p.item_type_id == 1:
-                pm.append(p)
-
-        if len(pm) == 0:
-            request.setResponseCode(404)
-            return b''
-
-        response_message = {"contact_permissions": []}
-        for p in pm:
-            response_message['contact_permissions'].append(p.json())
-
-        return dumps(response_message)
-
-    def get_devices_permissions(self, request, account_number, contact_id):
-        """
-        Find and format the set of permissions held on device items by
-        the given contact for the given account.
-        """
-        pm = []
-        for p in self.permissions:
-            if p.account_number == account_number and p.contact_id == contact_id and p.item_type_id == 2:
-                pm.append(p)
+        pm = [p for p in self.permissions if (p.account_number == account_number and
+                                p.contact_id == contact_id and p.item_type_id == item_type)]
 
         if len(pm) == 0:
             request.setResponseCode(404)
