@@ -39,6 +39,7 @@ class ValkyrieApi(object):
     effective_accounts_permissions_route = ('/account/<int:account_number>'
                                             '/permissions/contacts/accounts'
                                             '/by_contact/<int:contact_id>/effective')
+
     @app.route(effective_accounts_permissions_route, methods=['GET'])
     def effective_accounts_permissions(self, request, account_number, contact_id):
         """
@@ -52,6 +53,7 @@ class ValkyrieApi(object):
     effective_devices_permissions_route = ('/account/<int:account_number>'
                                            '/permissions/contacts/devices'
                                            '/by_contact/<int:contact_id>/effective')
+
     @app.route(effective_devices_permissions_route, methods=['GET'])
     def effective_devices_permissions(self, request, account_number, contact_id):
         """

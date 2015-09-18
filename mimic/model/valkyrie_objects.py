@@ -101,7 +101,8 @@ class ValkyrieStore(object):
         """
         """
         pm = [p for p in self.permissions if (p.account_number == account_number and
-                                p.contact_id == contact_id and p.item_type_id == item_type)]
+                                              p.contact_id == contact_id and
+                                              p.item_type_id == item_type)]
 
         if len(pm) == 0:
             request.setResponseCode(404)
