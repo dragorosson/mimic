@@ -38,6 +38,9 @@ class AccountContactPermission(object):
         2: "devices"}
 
     def __init__(self, account_number, contact_id, permission_type, item_id, item_type_id):
+        """
+        Constructor
+        """
         self.account_number = account_number
         self.contact_id = contact_id
         self.permission_type = permission_type
@@ -47,6 +50,9 @@ class AccountContactPermission(object):
         self.item_type_name = self.item_type_map.get(self.item_type_id, "unknown")
 
     def json(self):
+        """
+        Create a JSONic representation of self
+        """
         return {
             "account_number": self.account_number,
             "contact_id": self.contact_id,
@@ -99,6 +105,8 @@ class ValkyrieStore(object):
 
     def get_permissions(self, request, account_number, contact_id, item_type):
         """
+        Retrieve the permissions (if any) belonging to the given account,
+        contact, and item type (item_type=1 -> accounts, item_type=2 -> devices
         """
         pm = [p for p in self.permissions if (p.account_number == account_number and
                                               p.contact_id == contact_id and
